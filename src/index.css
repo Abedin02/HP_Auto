@@ -188,17 +188,6 @@ body::after {
   display: none;
 }
 
-/* Paper sections flip the palette locally for editorial rhythm. */
-.paper {
-  --background: var(--paper);
-  --foreground: var(--paper-ink);
-  --border: oklch(0.2 0.006 70 / 0.14);
-  --input: oklch(0.2 0.006 70 / 0.22);
-  --muted-foreground: oklch(0.45 0.012 70);
-  background: var(--paper);
-  color: var(--paper-ink);
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

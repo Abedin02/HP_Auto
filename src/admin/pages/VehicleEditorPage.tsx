@@ -161,6 +161,7 @@ export function VehicleEditorPage(props: VehicleEditorPageProps) {
           defaultAlt={defaultAlt}
           onImagesChange={setImages}
           onRevalidate={notifyRevalidate}
+          onUploadComplete={() => navigate("/admin")}
         />
       ) : (
         <p className="mt-10 border-t border-line pt-8 text-sm text-muted-foreground">

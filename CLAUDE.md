@@ -1,6 +1,6 @@
 # Project Instructions
 
-HP Auto is a luxury pre-owned performance-car dealership website (Porsche, BMW M, Audi Sport, AMG, Lamborghini, Ferrari…).
+HP Auto is a reliable car dealership website.
 Inventory lives in Supabase and is managed by an admin at `/admin`; the public site shows only vehicles the admin has
 published (there is no seed data). The site collects no visitor data: every enquiry hands off to a `tel:`/`mailto:`
 link (`src/lib/contact.ts`) instead of a form.

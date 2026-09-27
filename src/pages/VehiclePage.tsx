@@ -180,7 +180,7 @@ function MobileBuyBar({ vehicle }: { vehicle: Vehicle }) {
     <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-3 border-t border-line bg-ink/90 px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden">
       <div>
         <p className="font-display text-2xl leading-none">{formatPrice(vehicle.price)}</p>
-        <p className="mt-1 text-xs text-mist">7-day return · delivered</p>
+        <p className="mt-1 text-xs text-mist">30-day warranty · delivered</p>
       </div>
       <div className="flex items-center gap-2">
         <Button asChild variant="luxe-outline" size="icon-lg" className="text-ivory">

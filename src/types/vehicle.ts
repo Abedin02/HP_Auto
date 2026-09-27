@@ -70,10 +70,6 @@ function normalizeKey(value: string): string {
   return value.trim().replace(/\s+/g, " ").toLowerCase();
 }
 
-export function isPopularMake(value: string): value is PopularMake {
-  return (POPULAR_MAKES as readonly string[]).includes(value);
-}
-
 /**
  * Turns admin input into the stored make name.
  *   "  chevy " -> "Chevrolet", "BMW" -> "BMW", "mercedes benz" -> "Mercedes-Benz"

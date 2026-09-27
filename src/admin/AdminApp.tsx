@@ -39,5 +39,3 @@ export function AdminApp() {
 
   return <AuthGuard pathname={pathname}>{renderRoute(pathname)}</AuthGuard>;
 }
-
-export default AdminApp;

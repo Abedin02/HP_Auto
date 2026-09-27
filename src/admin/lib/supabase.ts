@@ -7,7 +7,7 @@ import { PUBLIC_SUPABASE_PUBLISHABLE_KEY, PUBLIC_SUPABASE_URL } from "@/lib/publ
 
 export const isSupabaseConfigured = Boolean(PUBLIC_SUPABASE_URL && PUBLIC_SUPABASE_PUBLISHABLE_KEY);
 
-export const supabase: SupabaseClient | null = isSupabaseConfigured
+const supabase: SupabaseClient | null = isSupabaseConfigured
   ? createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
       auth: { persistSession: true },
     })

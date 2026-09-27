@@ -10,12 +10,6 @@ const PILLARS = [
     body: "Factory-trained technicians check paint depth, borescope the cylinders and road-test every car. The full report is published on each car's page.",
   },
   {
-    numeral: "7",
-    unit: "days",
-    title: "To change your mind",
-    body: "Live with it for a week. If it isn't right, we collect it and refund you in full. No questions, no restocking fee.",
-  },
-  {
     numeral: "48",
     unit: "states",
     title: "Enclosed, white-glove delivery",
@@ -49,7 +43,7 @@ export function TheStandard() {
           }
         />
 
-        <ol className="mt-16 grid gap-px bg-line md:grid-cols-2 xl:grid-cols-4">
+        <ol className="mt-16 grid gap-px bg-line lg:grid-cols-3">
           {PILLARS.map((pillar, i) => (
             <Reveal as="li" key={pillar.title} delay={i * 100} className="group bg-ink p-8 md:p-10">
               <p className="flex items-baseline gap-3">

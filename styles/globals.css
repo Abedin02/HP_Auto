@@ -15,8 +15,6 @@
   --color-mist: var(--mist);
   --color-champagne: var(--champagne);
   --color-champagne-bright: var(--champagne-bright);
-  --color-paper: var(--paper);
-  --color-paper-ink: var(--paper-ink);
   --color-line: var(--line);
 
   /* shadcn semantic tokens */
@@ -46,7 +44,7 @@
   --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* The showroom is dark-first by design; paper sections opt into the light palette locally. */
+/* The showroom is dark-first by design. */
 :root {
   color-scheme: dark;
   --radius: 0.25rem;
@@ -58,8 +56,6 @@
   --mist: oklch(0.7 0.014 80);
   --champagne: oklch(0.77 0.085 80);
   --champagne-bright: oklch(0.86 0.08 85);
-  --paper: oklch(0.94 0.016 82);
-  --paper-ink: oklch(0.2 0.006 70);
   --line: oklch(0.945 0.014 82 / 0.12);
 
   --background: var(--ink);

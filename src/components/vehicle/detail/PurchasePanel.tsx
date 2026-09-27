@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarClock, RotateCcw, ShieldCheck, Truck } from "lucide-react";
+import { ArrowRight, CalendarClock, ShieldCheck, ShieldPlus, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SHOWROOM_PHONE, telHref, vehicleEmailHref } from "@/lib/contact";
 import { deliveryWindow } from "@/lib/delivery";
@@ -14,7 +14,7 @@ type PurchasePanelProps = {
 export function PurchasePanel({ vehicle }: PurchasePanelProps) {
   const promises = [
     { icon: Truck, title: "Enclosed delivery", body: `Arrives ${deliveryWindow()}` },
-    { icon: RotateCcw, title: "7-day return", body: "Full refund, no restocking fee" },
+    { icon: ShieldPlus, title: "30-day limited warranty", body: "Engine & transmission, up to 1,000 miles" },
     { icon: ShieldCheck, title: "172-point inspection", body: "Passed · report below" },
     {
       icon: CalendarClock,

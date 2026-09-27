@@ -26,6 +26,8 @@ type PhotoManagerProps = {
   defaultAlt: string;
   onImagesChange: (images: readonly VehicleImageRow[]) => void;
   onRevalidate: () => void;
+  /** Called once every file in an upload batch has saved. Not called if any of them failed. */
+  onUploadComplete?: () => void;
 };
 
 function clamp01(value: number): number {
@@ -33,7 +35,14 @@ function clamp01(value: number): number {
 }
 
 /** Multi-upload + reorder + focal-point + alt-text manager for one vehicle's photos. */
-export function PhotoManager({ vehicleId, images, defaultAlt, onImagesChange, onRevalidate }: PhotoManagerProps) {
+export function PhotoManager({
+  vehicleId,
+  images,
+  defaultAlt,
+  onImagesChange,
+  onRevalidate,
+  onUploadComplete,
+}: PhotoManagerProps) {
   const [tasks, setTasks] = useState<UploadTask[]>([]);
   const [pendingDelete, setPendingDelete] = useState<VehicleImageRow | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -82,6 +91,7 @@ export function PhotoManager({ vehicleId, images, defaultAlt, onImagesChange, on
     if (!fileList || fileList.length === 0) return;
     const files = Array.from(fileList);
     setIsUploading(true);
+    let failedCount = 0;
 
     try {
       for (const file of files) {
@@ -106,6 +116,7 @@ export function PhotoManager({ vehicleId, images, defaultAlt, onImagesChange, on
           onRevalidate();
           if (isMounted()) setTasks(prev => prev.map(task => (task.id === taskId ? { ...task, status: "done" } : task)));
         } catch (err) {
+          failedCount += 1;
           if (isMounted()) {
             setTasks(prev =>
               prev.map(task =>
@@ -119,6 +130,7 @@ export function PhotoManager({ vehicleId, images, defaultAlt, onImagesChange, on
       if (isMounted()) setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
+    if (failedCount === 0 && isMounted()) onUploadComplete?.();
   };
 
   const handleMove = async (image: VehicleImageRow, direction: -1 | 1) => {
