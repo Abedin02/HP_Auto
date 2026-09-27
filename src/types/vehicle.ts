@@ -1,8 +1,6 @@
 /**
- * Shared vehicle types and constants.
- *
- * This file is imported by both the server and the browser bundle, so it must stay
- * free of server-only imports (Supabase clients, Bun APIs, `./index.html`, etc.).
+ * Shared vehicle types and constants. Both the server and the browser bundle import this file,
+ * so I keep server-only imports (Supabase clients, Bun APIs, HTML) out of it.
  */
 
 // ---------------------------------------------------------------------------
@@ -11,8 +9,7 @@
 
 /**
  * The 25 highest-volume brands in the U.S. new-vehicle market (approximate 2024–25
- * rankings), alphabetized for display. This drives the admin make picker; it is NOT
- * the full set of makes a vehicle may have. Anything else goes in via "Other".
+ * rankings), alphabetized for the admin make picker. Other makes can still be typed in.
  */
 export const POPULAR_MAKES = [
   "Acura",
@@ -44,9 +41,8 @@ export const POPULAR_MAKES = [
 export type PopularMake = (typeof POPULAR_MAKES)[number];
 
 /**
- * A vehicle's make. Deliberately a plain string: the database is the source of truth,
- * and a dealer can stock makes outside POPULAR_MAKES (Porsche, Ferrari, ...).
- * Normalize with `canonicalMake()` before saving so filtering stays consistent.
+ * A vehicle's make, as a plain string because the lot can stock makes outside POPULAR_MAKES
+ * (Porsche, Ferrari, ...). I run it through `canonicalMake()` before saving so filters match.
  */
 export type Make = string;
 

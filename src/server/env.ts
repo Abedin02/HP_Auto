@@ -1,6 +1,6 @@
 /**
- * Server-side Supabase configuration. Distinct from src/lib/public-env.ts (browser-visible
- * BUN_PUBLIC_* vars): these are read only on the server and must never be inlined into a bundle.
+ * Server-side Supabase configuration, separate from the browser's BUN_PUBLIC_* vars in
+ * src/lib/public-env.ts. I only read these on the server, so they never end up in a bundle.
  */
 export type ServerSupabaseConfig = {
   url: string;

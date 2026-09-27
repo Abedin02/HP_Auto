@@ -5,7 +5,7 @@
 --     (was integer / numeric(3,1)) so decimals and larger values are stored as entered.
 --
 -- Idempotent: constraints are dropped with IF EXISTS; re-running the type changes is a no-op.
--- The NOT NULL on engine fails if any existing vehicle has no engine; fill those in first.
+-- The NOT NULL on engine fails if any existing vehicle has no engine, so I fill those in first.
 
 alter table public.vehicles alter column engine set not null;
 alter table public.vehicles drop constraint if exists vehicles_engine_check;

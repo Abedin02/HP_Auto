@@ -1,5 +1,5 @@
--- Length limits that were previously enforced only by the admin form. Mirrors the MAX_* constants
--- in src/lib/vehicle-validation.ts; keep the two in sync.
+-- Length limits that were previously enforced only by the admin form. They mirror the MAX_* constants
+-- in src/lib/vehicle-validation.ts, and I change both together.
 --
 -- char_length() counts code points while JS .length counts UTF-16 units, so the database is never
 -- stricter than the form (an emoji is 1 here, 2 in JS).

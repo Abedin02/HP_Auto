@@ -1,8 +1,7 @@
 /**
- * Rate-limit key for a request. Behind a hosting proxy (Render routes every request through
- * Cloudflare) the socket address is the proxy's, so every visitor would share one bucket; the
- * real address arrives in headers instead. Those headers are client-controlled when nothing
- * sits in front of the server, so they are only read when `trustProxy` is set.
+ * Rate-limit key for a request. Render routes traffic through Cloudflare, so the socket address
+ * is the proxy's and the visitor's address arrives in headers. A client can forge those headers
+ * when no proxy is in front, so I only read them when `trustProxy` is set.
  */
 export function resolveClientKey(headers: Headers, socketIp: string | undefined, trustProxy: boolean): string {
   if (trustProxy) {

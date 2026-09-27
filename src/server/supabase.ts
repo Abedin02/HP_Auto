@@ -1,7 +1,6 @@
 /**
- * Lazy server-side Supabase client. Publishable key + RLS only — the server NEVER holds the
- * secret/service-role key (only scripts/create-admin.ts does). Session persistence is
- * irrelevant on the server, so it's disabled to avoid writing to disk / accidental refresh loops.
+ * Lazy server-side Supabase client using the publishable key, so RLS applies. The secret key only
+ * lives in scripts/create-admin.ts. Session persistence and token refresh are off on the server.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { getServerSupabaseConfig } from "./env";

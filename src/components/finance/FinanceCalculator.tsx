@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { DEFAULT_APR, TERM_OPTIONS, financeSummary } from "@/lib/finance";
+import { DEFAULT_APR, PRICE_RANGE, TERM_OPTIONS, financeSummary } from "@/lib/finance";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -29,9 +29,9 @@ export function FinanceCalculator({ price, onPriceChange, className }: FinanceCa
           <RangeRow label="Vehicle price" value={formatPrice(price)}>
             <input
               type="range"
-              min={40_000}
-              max={600_000}
-              step={5_000}
+              min={PRICE_RANGE.min}
+              max={PRICE_RANGE.max}
+              step={PRICE_RANGE.step}
               value={price}
               onChange={e => onPriceChange(Number(e.target.value))}
               aria-label="Vehicle price"

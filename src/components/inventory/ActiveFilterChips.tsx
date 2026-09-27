@@ -15,8 +15,8 @@ function buildChips(filters: InventoryFilters, makeFacetList: readonly MakeFacet
   for (const make of filters.makes) {
     chips.push({
       key: `make-${make}`,
-      // The URL keeps whatever casing was typed/shared; label with the canonical spelling
-      // from live inventory when we recognise it, falling back to the raw value otherwise.
+      // The URL keeps whatever casing was typed or shared, so I label the chip with the canonical
+      // spelling from live inventory when it matches, and the raw value otherwise.
       label: canonicalMakeLabel(make, makeFacetList),
       remove: f => ({ ...f, makes: f.makes.filter(m => m !== make) }),
     });

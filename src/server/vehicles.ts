@@ -28,7 +28,7 @@ export type VehicleService = {
 
 export type CreateVehicleServiceOptions = {
   fetchPublished: FetchPublished;
-  /** Cache lifetime in ms. Defaults to 60s, per the public /api/vehicles contract. */
+  /** Cache lifetime in ms. Defaults to 60s. */
   ttlMs?: number;
   now?: () => number;
 };
@@ -167,11 +167,7 @@ function createSupabaseFetchPublished(): FetchPublished {
       .order("created_at", { ascending: false });
     if (vehiclesError) throw vehiclesError;
 
-    // postgrest-js's typed `.select()` overloads parse a literal query-string type to infer the
-    // row shape; VEHICLE_COLUMNS is a plain `string` (built once, shared, not a literal at this
-    // call site), so it falls back to a generic "unparseable string" type. `unknown` first is
-    // the standard escape hatch for that — same shape as `select("*")` would have needed without
-    // a generated `Database` type.
+    // VEHICLE_COLUMNS is a plain string, so postgrest can't infer the row type from it.
     const rows = (vehicles ?? []) as unknown as VehicleRow[];
     if (rows.length === 0) return { vehicles: [], images: [] };
 

@@ -1,10 +1,8 @@
 /**
- * Creates (or promotes) the single HP Auto admin user via the Supabase service-role key.
- * This is the ONLY place in the codebase that uses SUPABASE_SECRET_KEY — never the server,
- * never the browser. Run with `bun run create-admin -- --email you@example.com --password '...'`.
- *
- * Interactive prompts are intentionally not supported: args or env vars only, so this can
- * run non-interactively (CI, scripts) without a password ever being echoed to a prompt.
+ * Creates (or promotes) the HP Auto admin user with the Supabase service-role key. This script is
+ * the only code that reads SUPABASE_SECRET_KEY; the server and the browser never see it.
+ * I run it with `bun run create-admin -- --email you@example.com --password '...'`, passing
+ * credentials as args or env vars so a password is never typed into a prompt.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 

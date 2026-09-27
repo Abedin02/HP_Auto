@@ -1,7 +1,6 @@
 /**
- * Hand-rolled validation for the admin vehicle form (no schema library). Shared by the admin
- * form (client) and, indirectly, by anything that writes to `public.vehicles` — the database
- * CHECK constraints in supabase/migrations/ mirror these rules.
+ * Validation for the admin vehicle form. The CHECK constraints in supabase/migrations/ enforce
+ * the same rules in the database.
  */
 import {
   BODY_STYLES,
@@ -105,11 +104,8 @@ function err<T>(message: string): FieldResult<T> {
 }
 
 /**
- * Reads a field's validated value, recording `errors[key]` and returning `fallback` instead
- * when the field failed. `fallback` is a real, concrete value of the field's own type — never
- * `undefined` — so an invalid field can never smuggle `undefined` into the final VehicleInput;
- * it is only ever read when `errors` is non-empty, at which point validateVehicleInput bails
- * out before constructing a value.
+ * Returns a field's validated value, or records `errors[key]` and returns `fallback`. Fallbacks
+ * are only used when there are errors, and then validateVehicleInput returns early.
  */
 function orDefault<T>(result: FieldResult<T>, fallback: T, errors: FieldErrors, key: keyof VehicleInput): T {
   if (result.ok) return result.value;
@@ -233,11 +229,7 @@ function validateStory(value: unknown): FieldResult<string> {
 export function validateVehicleInput(raw: unknown): VehicleValidation {
   if (!isRecord(raw)) return { ok: false, errors: {} };
 
-  // Assign-as-you-go: every field is validated and immediately unwrapped via `orDefault`, whose
-  // fallback is a real value of the correct type (never `undefined`). Errors accumulate as a
-  // side effect so every field gets checked (not just the first failure), and the fallbacks are
-  // only ever read when `errors` is non-empty below — at which point we return before touching
-  // them. Nothing here casts `unknown`/`undefined` through as any of these field types.
+  // I validate every field, not just up to the first failure, so the form shows all errors at once.
   const errors: FieldErrors = {};
 
   const status = orDefault(validateEnumField(VEHICLE_STATUSES, raw.status, "Status"), "draft", errors, "status");

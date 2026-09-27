@@ -1,4 +1,4 @@
-# Render Blueprint: New > Blueprint in the Render dashboard, point it at this repo.
+# Render Blueprint. I deploy it from the Render dashboard via New > Blueprint, pointed at this repo.
 services:
   - type: web
     name: hp-auto

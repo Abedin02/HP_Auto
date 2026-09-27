@@ -8,9 +8,7 @@
 --     (and some makes/models) never publish these figures. engine keeps its length cap (now
 --     null-tolerant); the other three keep their existing ">0" checks, also null-tolerant.
 --
--- Idempotent: every constraint is dropped with IF EXISTS before being re-added, so this file is
--- safe to re-run. Does not touch 20260926000001_vehicles.sql — that migration may already be
--- applied against a live database.
+-- Idempotent: every constraint is dropped with IF EXISTS before being re-added.
 
 -- make ------------------------------------------------------------------------------------
 -- `!~ '^\s|\s$'` (rather than `= btrim(make)`) also catches whitespace btrim() doesn't strip,

@@ -1,9 +1,8 @@
 -- HP Auto inventory schema: public.vehicles + public.vehicle_images.
 -- Idempotent: safe to re-run (CREATE ... IF NOT EXISTS / CREATE OR REPLACE / DROP POLICY IF EXISTS).
 --
--- Enum-shaped CHECK constraints mirror the readonly arrays in src/types/vehicle.ts
--- (MAKES, BODY_STYLES, DRIVETRAINS, POWERTRAINS, CHARACTERS, VEHICLE_STATUSES). If those
--- arrays change, this migration (or a follow-up one) must be updated to match.
+-- Enum-shaped CHECK constraints mirror the readonly arrays in src/types/vehicle.ts. When I change
+-- those arrays, I add a follow-up migration to match (make stopped being an enum in 20260927000001).
 --
 -- gen_random_uuid() ships in Postgres core (no pgcrypto needed) on the Postgres versions
 -- Supabase runs.

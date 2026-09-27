@@ -1,7 +1,6 @@
 /**
- * Pure mapping between `public.vehicles` / `public.vehicle_images` rows (snake_case,
- * as returned by supabase-js/postgrest) and the shared VehicleInput / Vehicle shapes.
- * No supabase import here — this stays testable without a network client.
+ * Pure mapping between `public.vehicles` / `public.vehicle_images` rows (snake_case, as
+ * postgrest returns them) and the shared VehicleInput / Vehicle shapes.
  */
 import {
   BODY_STYLES,
@@ -84,8 +83,7 @@ export type VehicleImageRow = {
 
 /**
  * Postgres `numeric` columns come back as strings over postgrest; plain rows may already be
- * numbers. Rejects non-finite results (NaN, Infinity) by returning NaN, so callers that check
- * `Number.isFinite` catch a corrupt/garbage value instead of silently propagating it.
+ * numbers. Anything non-finite comes back as NaN, which the `Number.isFinite` checks reject.
  */
 function toNumber(value: number | string): number {
   const num = typeof value === "string" ? Number(value) : value;
@@ -134,8 +132,7 @@ export function inputToRow(
 }
 
 export function rowToInput(row: VehicleRow): VehicleInput {
-  // Captured before the guard: `row`'s static type is already exactly VehicleRow, so a false
-  // result narrows it to `never` in this branch (TS has no other type left to attribute to it).
+  // Read before the guard, because a failed guard narrows `row` to `never`.
   const id = row.id;
   if (!isValidVehicleRow(row)) {
     throw new Error(`rowToInput: row ${id} failed validation (invalid enum, type, or non-finite number).`);
@@ -197,11 +194,8 @@ function isFiniteNumericLikeOrNull(value: unknown): value is number | string | n
 }
 
 /**
- * Structural + enum + numeric-finiteness guard for a row coming back from Postgres/postgrest.
- * Exported so callers reading `unknown` data (e.g. an admin single-row fetch) can validate and
- * narrow it before calling rowToInput/rowToVehicle, instead of casting with `as unknown as
- * VehicleRow`. rowToVehicle uses it internally to skip rows with schema drift or corrupt data
- * (invalid enum, wrong type, NaN/Infinity) rather than propagating garbage.
+ * Shape, enum and finite-number check for a row from Postgres. The admin uses it to narrow
+ * `unknown` data before rowToInput, and rowToVehicle uses it to skip corrupt rows.
  */
 export function isValidVehicleRow(row: unknown): row is VehicleRow {
   if (typeof row !== "object" || row === null) return false;
@@ -275,10 +269,7 @@ export function rowToVehicle(row: VehicleRow, images: readonly VehicleImageRow[]
     stockNumber: row.stock_number,
     vinTail: row.vin_tail,
     year: row.year,
-    // isValidVehicleRow already checked these against BODY_STYLES/DRIVETRAINS/POWERTRAINS above
-    // (make is any non-empty string, no enum to check); the cast just tells TS what that
-    // runtime check already guarantees (row's *static* type is unchanged by the guard, since it
-    // was already exactly VehicleRow beforehand).
+    // isValidVehicleRow already checked these enums; the cast only tells TypeScript.
     make: row.make as Make,
     model: row.model,
     trim: row.trim,

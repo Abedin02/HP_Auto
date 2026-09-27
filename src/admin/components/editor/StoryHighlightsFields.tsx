@@ -14,10 +14,8 @@ type StoryHighlightsFieldsProps = {
 };
 
 /**
- * Story copy plus an add/remove list of up to 8 short highlights. Rows are derived straight
- * from `form.highlights` every render (no parallel local-state copy to fall out of sync);
- * `index` is a safe React key here because each row is a fully controlled input with no
- * internal state of its own that could attach to the wrong row after a remove.
+ * Story copy plus an add/remove list of up to 8 short highlights. Rows render straight from
+ * `form.highlights`, and each input is fully controlled, so `index` is a safe key.
  */
 export function StoryHighlightsFields({ form, errors, onUpdate }: StoryHighlightsFieldsProps) {
   const handleAdd = () => {
@@ -62,7 +60,6 @@ export function StoryHighlightsFields({ form, errors, onUpdate }: StoryHighlight
           </Button>
         </div>
         {form.highlights.map((highlight, index) => (
-          // eslint-disable-next-line react/no-array-index-key -- rows are fully controlled, no per-row state to misattach.
           <div key={index} className="flex items-center gap-2">
             <Input
               value={highlight}

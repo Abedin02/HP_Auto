@@ -15,6 +15,8 @@ export type FinanceSummary = {
 export const TERM_OPTIONS = [36, 48, 60, 72, 84] as const;
 export const DEFAULT_APR = 6.49;
 
+export const PRICE_RANGE = { min: 10_000, max: 500_000, step: 5_000 } as const;
+
 /** Standard amortized monthly payment. Returns 0 when nothing is financed. */
 export function monthlyPayment({ price, downPayment, aprPercent, termMonths }: FinanceInput): number {
   const principal = price - downPayment;

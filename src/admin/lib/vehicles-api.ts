@@ -1,11 +1,7 @@
 /**
- * All admin reads/writes against Supabase for vehicles + their photos. Every exported
- * function that touches the network returns a resolved value or throws `Error(message)` —
- * callers (pages) are responsible for catching and surfacing errors.
- *
- * `deleteVehicle`/`reorderImages` split their logic into a `*WithClient` function that takes
- * a narrow, hand-typed client shape — that is the seam `vehicles-api.test.ts` uses to fake
- * Supabase without fighting structural-typing mismatches against the real `SupabaseClient`.
+ * All admin reads and writes for vehicles and their photos. Network functions either resolve or
+ * throw `Error(message)`, and the pages show the error. `deleteVehicle` and `reorderImages` wrap
+ * `*WithClient` versions that take a narrow client type, which vehicles-api.test.ts fakes.
  */
 import { getSupabaseClient } from "@/admin/lib/supabase";
 import { RENDITION_WIDTHS, VEHICLE_PHOTO_BUCKET, renditionKey } from "@/lib/storage-paths";
@@ -42,11 +38,7 @@ export function unwrap<T>(data: T | null, error: SupabaseError): T {
   return data;
 }
 
-/**
- * `vehicle_rows.VehicleRow` has no ready-made image counterpart (`isValidVehicleRow` covers
- * only the vehicles table), so this mirrors its structural + numeric-finiteness checks for
- * `vehicle_images` — a corrupt/short-selected row is rejected here rather than cast through.
- */
+/** Shape check for a `vehicle_images` row, matching what `isValidVehicleRow` does for vehicles. */
 function isValidVehicleImageRow(row: unknown): row is VehicleImageRow {
   if (typeof row !== "object" || row === null) return false;
   const r = row as Record<string, unknown>;
@@ -198,10 +190,8 @@ export type DeleteVehicleClient = {
 };
 
 /**
- * Removes every rendition object for every photo of the vehicle, then the row (images cascade).
- * Each of the three network calls fails with its own distinct message so callers/tests can
- * tell "couldn't read the photo list" apart from "couldn't delete storage objects" apart from
- * "couldn't delete the row".
+ * Removes every rendition of every photo, then the vehicle row (image rows cascade). Each of the
+ * three steps fails with its own message, so the admin can tell which one went wrong.
  */
 export async function deleteVehicleWithClient(client: DeleteVehicleClient, id: string): Promise<void> {
   const { data: imageRows, error: imagesError } = await client.from("vehicle_images").select("path").eq("vehicle_id", id);

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef } from "react";
 
 /**
- * Returns a stable function reporting whether the component is still mounted. Use it to
- * guard `setState` calls made from a promise/callback that might resolve after unmount
- * (e.g. an in-flight Supabase request finishing after the user navigates away).
+ * Returns a stable function reporting whether the component is still mounted. I check it before
+ * `setState` in callbacks that can resolve after unmount, like a Supabase request that finishes
+ * after the admin navigates away.
  */
 export function useIsMounted(): () => boolean {
   const mountedRef = useRef(true);

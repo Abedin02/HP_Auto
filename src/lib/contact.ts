@@ -9,7 +9,7 @@ import { vehicleTitle } from "./format";
 /** Single concierge line, shown in the header, footer, mobile menu and concierge page. */
 export const SHOWROOM_PHONE = "+1 (310) 555-0142";
 
-// TODO: replace with the real inbox before launch.
+// TODO: I'm swapping in the real inbox before launch.
 export const SHOWROOM_EMAIL = "help@hpauto.example";
 
 export type Showroom = {

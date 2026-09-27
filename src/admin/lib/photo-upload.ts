@@ -1,11 +1,7 @@
 /**
- * Browser-side resize + upload for one vehicle photo. No Supabase plan here supports paid
- * image transforms, so every RENDITION_WIDTHS size is produced locally as WebP before
- * upload (see src/lib/storage-paths.ts for the on-disk layout `planRenditions` feeds into).
- *
- * Both browser-only pieces — decoding/canvas-encoding and the Supabase client — are taken as
- * injectable seams so this can be unit tested in Bun (no DOM, no network). See
- * photo-upload.test.ts.
+ * Browser-side resize + upload for one vehicle photo. The Supabase plan has no image transforms,
+ * so every RENDITION_WIDTHS size is encoded locally as WebP (layout in src/lib/storage-paths.ts).
+ * The decoder and storage client are passed in, which lets photo-upload.test.ts run without a DOM.
  */
 import { getSupabaseClient } from "@/admin/lib/supabase";
 import { planRenditions } from "@/admin/lib/rendition-plan";
@@ -76,13 +72,10 @@ async function defaultDecodeImage(file: File): Promise<DecodedImage> {
 }
 
 /**
- * Resizes one file and uploads all four RENDITION_WIDTHS objects for it. Each canonical
- * width is clamped to the natural width (never upscaled, via `planRenditions`); canonical
- * widths that clamp to the same pixel size reuse one encoded blob instead of re-encoding.
- * If any single rendition upload fails, every rendition already uploaded for this photo is
- * removed before the original error propagates. If that cleanup itself fails, the orphaned
- * keys are logged (so they can be swept manually) and the original error still propagates —
- * a cleanup failure must never mask why the upload failed.
+ * Resizes one file and uploads all four RENDITION_WIDTHS objects, never upscaling; widths that
+ * clamp to the same size share one encoded blob. If an upload fails, the renditions already
+ * uploaded are removed and the original error is rethrown. If that cleanup fails too, the
+ * orphaned keys are logged so I can delete them by hand.
  */
 export async function uploadVehiclePhoto(
   file: File,

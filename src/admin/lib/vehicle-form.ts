@@ -1,8 +1,7 @@
 /**
- * Pure mapping between the vehicle editor form and `VehicleInput`. The editor form is fully
- * controlled: every field lives in a `VehicleFormDefaults` state object, and these functions
- * only convert to/from that shape. Nothing here talks to Supabase or the DOM, so it stays
- * fully unit-testable.
+ * Pure mapping between the vehicle editor form and `VehicleInput`. The form is fully controlled:
+ * every field lives in a `VehicleFormDefaults` state object, and these functions convert to and
+ * from that shape.
  */
 import { BODY_STYLES, DRIVETRAINS, POWERTRAINS } from "@/types/vehicle";
 import type { VehicleInput } from "@/lib/vehicle-validation";

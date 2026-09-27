@@ -11,15 +11,21 @@ import { SHOWROOM_EMAIL, SHOWROOM_PHONE, telHref } from "@/lib/contact";
 import { unsplash } from "@/lib/images";
 
 const OPTIONS = [
-  { title: "Finance", body: "Terms from 36 to 84 months, with rates from lenders who specialise in collector and performance cars." },
-  { title: "Lease", body: "Balloon-style leases on cars that hold their value. You keep the upside when you sell." },
-  { title: "Portfolio", body: "Borrow against the cars you already own to fund the next one, with no need to sell." },
+  { title: "Finance", body: "Terms from 36 to 84 months, with rates from lenders who specialise in getting the best deals." },
+  {
+    title: "Trade-in",
+    body: "Bring your current car in for a free appraisal. You get a written offer, and its value comes straight off the price.",
+  },
+  {
+    title: "Protection plans",
+    body: "Extended service contracts, GAP cover and tire & wheel protection, arranged when you sign. Always optional.",
+  },
 ];
 
 const FAQ = [
   {
-    q: "Can I finance a classic or a car over $1M?",
-    a: "Yes. Our lenders specialise in collector cars, including pre-1990 classics and hypercars. We'll structure terms around the car's value.",
+    q: "Can I get finance with less-than-perfect credit?",
+    a: "Often, yes. We work with several lenders, including ones who help first-time buyers and people rebuilding their credit. The finance desk finds the best rate you qualify for.",
   },
   {
     q: "Do you work with out-of-state buyers?",
@@ -46,7 +52,7 @@ export function FinancePage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-ink/10" />
         <div className="relative mx-auto w-full max-w-[1600px] px-5 pt-40 pb-20 md:px-10">
-          <p className="eyebrow animate-fade-up text-champagne">Finance & leasing</p>
+          <p className="eyebrow animate-fade-up text-champagne">Finance & trade-ins</p>
           <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(3rem,7vw,6.5rem)] leading-[0.95] [animation-delay:120ms]">
             Finance for the car, <em className="text-gilded">not the paperwork.</em>
           </h1>

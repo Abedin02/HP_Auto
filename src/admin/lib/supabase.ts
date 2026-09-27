@@ -1,6 +1,6 @@
 /**
- * Browser Supabase client for the admin app only. Public-site code must never import
- * `@supabase/supabase-js` (see CLAUDE.md); this module is exclusively for `src/admin/**`.
+ * Browser Supabase client for the admin app. I keep `@supabase/supabase-js` out of the public
+ * site, so only `src/admin/**` imports this module.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { PUBLIC_SUPABASE_PUBLISHABLE_KEY, PUBLIC_SUPABASE_URL } from "@/lib/public-env";
@@ -13,7 +13,7 @@ export const supabase: SupabaseClient | null = isSupabaseConfigured
     })
   : null;
 
-/** Throws if called while Supabase env vars are missing; guard with `isSupabaseConfigured` first. */
+/** Throws when the Supabase env vars are missing, so I check `isSupabaseConfigured` before calling it. */
 export function getSupabaseClient(): SupabaseClient {
   if (!supabase) {
     throw new Error(
