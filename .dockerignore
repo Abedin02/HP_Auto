@@ -1,0 +1,16 @@
+node_modules
+dist
+out
+coverage
+.git
+.env
+.env.*
+.claude
+.playwright-mcp
+.mcp.json
+skills-lock.json
+Dockerfile
+.dockerignore
+render.yaml
+README.md
+*.test.ts

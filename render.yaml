@@ -1,0 +1,20 @@
+# Render Blueprint: New > Blueprint in the Render dashboard, point it at this repo.
+services:
+  - type: web
+    name: hp-auto
+    runtime: docker
+    plan: free
+    region: virginia
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      # Server (RLS-bound publishable key; never the secret key).
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      # Inlined into the browser bundles when the server starts.
+      - key: BUN_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: BUN_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+        sync: false

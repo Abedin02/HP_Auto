@@ -1,0 +1,215 @@
+@import "../styles/globals.css";
+
+@layer base {
+  :root {
+    @apply font-sans antialiased;
+    font-feature-settings: "ss01", "tnum";
+  }
+
+  body {
+    @apply min-h-screen bg-ink text-ivory;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--champagne);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--champagne);
+    outline-offset: 3px;
+  }
+
+  input[type="range"] {
+    accent-color: var(--champagne);
+  }
+}
+
+/* ---------- Atmosphere ---------- */
+
+/* Film grain over everything: an SVG turbulence tile, fixed so it never scrolls. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------- Type utilities ---------- */
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in oklch, var(--ivory) 45%, transparent);
+}
+
+@utility text-gilded {
+  background: linear-gradient(100deg, var(--champagne) 0%, var(--champagne-bright) 35%, var(--champagne) 55%, oklch(0.62 0.07 70) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gild 7s var(--ease-luxe) infinite alternate;
+  /* The gradient only paints inside the box; pad it over italic descenders and overhangs, then cancel the layout shift. */
+  padding: 0.08em 0.1em 0.22em 0;
+  margin: -0.08em -0.1em -0.22em 0;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@keyframes gild {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes kenburns {
+  from { transform: scale(1.12) translate3d(1.5%, 1%, 0); }
+  to { transform: scale(1) translate3d(0, 0, 0); }
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translate3d(0, 110%, 0) rotate(2deg); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes scroll-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@keyframes page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-page-in { animation: page-in 0.7s var(--ease-luxe) both; }
+.animate-kenburns { animation: kenburns 9s var(--ease-luxe) both; }
+.animate-marquee { animation: marquee 48s linear infinite; }
+.animate-rise { animation: rise 1.1s var(--ease-luxe) both; }
+.animate-fade-up { animation: fade-up 0.9s var(--ease-luxe) both; }
+.animate-scroll-cue { animation: scroll-cue 2.4s var(--ease-luxe) infinite; }
+
+/* Scroll-driven parallax where supported; a static, slightly zoomed image elsewhere. */
+@keyframes parallax {
+  from { transform: translate3d(0, -7%, 0) scale(1.16); }
+  to { transform: translate3d(0, 7%, 0) scale(1.16); }
+}
+.parallax-image {
+  transform: scale(1.16);
+}
+@supports (animation-timeline: view()) {
+  .parallax-image {
+    animation: parallax linear both;
+    animation-timeline: view();
+  }
+}
+
+/* Scroll-reveal: elements start hidden and animate in when useReveal marks them. */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition:
+    opacity 1s var(--ease-luxe),
+    transform 1.2s var(--ease-luxe);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cursor spotlight: components set --spot-x / --spot-y on pointer move. */
+.spotlight {
+  --spot-x: 50%;
+  --spot-y: 50%;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-luxe);
+  background: radial-gradient(420px circle at var(--spot-x) var(--spot-y), oklch(0.86 0.08 85 / 0.16), transparent 60%);
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Paper sections flip the palette locally for editorial rhythm. */
+.paper {
+  --background: var(--paper);
+  --foreground: var(--paper-ink);
+  --border: oklch(0.2 0.006 70 / 0.14);
+  --input: oklch(0.2 0.006 70 / 0.22);
+  --muted-foreground: oklch(0.45 0.012 70);
+  background: var(--paper);
+  color: var(--paper-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
