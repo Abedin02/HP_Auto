@@ -5,12 +5,14 @@ import { NAV_LINKS } from "./nav-links";
 
 export function SiteFooter() {
   return (
-    <footer data-site-footer className="relative overflow-hidden border-t border-line bg-ink">
-      <div className="mx-auto grid max-w-[1600px] gap-14 px-5 pt-20 pb-10 md:grid-cols-12 md:px-10">
+    <footer data-site-footer className="border-t border-line bg-ink">
+      <div className="mx-auto grid max-w-[1600px] gap-14 px-5 py-20 md:grid-cols-12 md:px-10">
         <div className="md:col-span-5">
           <p className="eyebrow text-champagne">Visit or call</p>
           <h2 className="mt-4 font-display text-4xl leading-[1.05] md:text-5xl">
-            Come see the collection <em className="text-gilded">in person.</em>
+            Come see the collection
+            <br />
+            <em className="text-gilded">in person.</em>
           </h2>
           <ul className="mt-8 space-y-4">
             <li>
@@ -32,7 +34,7 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-10 md:col-span-7 md:grid-cols-3">
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-10 md:col-span-6 md:col-start-7">
           <div>
             <p className="eyebrow mb-5 text-mist">Explore</p>
             <ul className="space-y-3">
@@ -66,12 +68,6 @@ export function SiteFooter() {
             </div>
           ))}
         </nav>
-      </div>
-
-      <div aria-hidden className="pointer-events-none select-none px-3">
-        <p className="text-outline text-center font-display text-[25vw] leading-[0.78] italic tracking-tighter">
-          HP Auto
-        </p>
       </div>
 
       <div className="mx-auto flex max-w-[1600px] flex-col gap-3 border-t border-line px-5 py-6 text-xs text-ivory/45 md:flex-row md:justify-between md:px-10">

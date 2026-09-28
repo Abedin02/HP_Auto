@@ -41,8 +41,8 @@ link (`src/lib/contact.ts`) instead of a form.
 - `src/lib/`: pure logic with tests (inventory filters + URL (de)serialisation, finance, vehicle validation,
   `vehicle-rows.ts` DB row ↔ `Vehicle` mapping, `contact.ts` showroom phone/email/maps + `tel:`/`mailto:` builders)
 - `src/index.ts`: unknown `/api/*` → JSON 404; see `src/server/vehicles.ts` for the public vehicle API
-- `styles/globals.css`: design tokens (ink/ivory/champagne/paper). `src/index.css`: grain, motion, `font-display`,
-  `eyebrow`, `text-gilded`, `text-outline`, `[data-reveal]`, `.spotlight`, `.paper` (light editorial sections)
+- `styles/globals.css`: design tokens (ink/ivory/champagne). `src/index.css`: grain, motion, `font-display`,
+  `eyebrow`, `text-gilded`, `text-outline`, `[data-reveal]`, `.spotlight`
 
 ## Code Style
 - Path alias `@/*` → `src/*`; `verbatimModuleSyntax` is on, so use `import { type X }` / `import type` for type-only imports
